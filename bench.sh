@@ -51,12 +51,12 @@ elif [ "$MODE" = "redcloud" ] ; then
 
 
 	#install mysql, let it use up to 40% of memory
-	mysql_install "$DB_PASSWORD"
+	mysql_install "$DB_ROOT_PASSWORD"
 	mysql_tune 40
 
 
 	#install nginx, along with php but not passenger(ruby) or perl
-	nginx_install "$NGINX_USER" "$NGINX_GROUP" "0" "1" "0"
+	nginx_install "www-data"  "www-data" "0" "1" "0"
 
 	#install wordpress
 	better_wordpress_install "$DB_ROOT_PASSWORD" "default" "$WP_USER" "$WP_PASS" "$WP_TITLE" "$WP_EMAIL"
