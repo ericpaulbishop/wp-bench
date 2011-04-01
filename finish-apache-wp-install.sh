@@ -17,7 +17,7 @@ function finish_apache_wp_install
 
 	VPATH=$(apache_virtualhost_get_docroot $WP_DOMAIN)
 
-	cd "$VPATH/wp-admin/"
+	cd "$VPATH/wordpress/wp-admin/"
 	echo '<?php' >wpinst.php
 	echo "define( 'WP_SITEURL', 'http://$WP_DOMAIN' );" >>wpinst.php
 
