@@ -15,14 +15,22 @@ if [ "$MODE" = "linode" ] ; then
 	source ./linode-bash-library.sh
 	source ./finish-apache-wp-install.sh 
 
+	vhost=$(get_rdns_primary_ip)
+	if [ -z "$vhost" ] ; then
+		vhost=$(system_primary_ip)
+	fi
+	if [ -z "$vhost" ] ; then
+		vhost="127.0.0.1"
+	fi
+
 	system_update
 	postfix_install_loopback_only
 	mysql_install "$DB_ROOT_PASSWORD" && mysql_tune 40
 	php_install_with_apache && php_tune
-	apache_install && apache_tune 40 && apache_virtualhost_from_rdns
+	apache_install && apache_tune 40 && apache_virtualhost "$vhost"
 	goodstuff
-	wordpress_install $(get_rdns_primary_ip)
-	finish_apache_wp_install $(get_rdns_primary_ip) "$WP_TITLE" "$WP_USER" "$WP_PASS" "$WP_EMAIL"
+	wordpress_install "$vhost"
+	finish_apache_wp_install "$vhost" "$WP_TITLE" "$WP_USER" "$WP_PASS" "$WP_EMAIL"
 	restartServices
 
 elif [ "$MODE" = "redcloud" ] ; then
