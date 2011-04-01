@@ -56,7 +56,7 @@ elif [ "$MODE" = "redcloud" ] ; then
 
 
 	#install nginx, along with php but not passenger(ruby) or perl
-	nginx_install "www-data"  "www-data" "0" "1" "0"
+	nginx_install "www-data"  "www-data" "1" "0" "0"
 
 	#install wordpress
 	better_wordpress_install "$DB_ROOT_PASSWORD" "default" "$WP_USER" "$WP_PASS" "$WP_TITLE" "$WP_EMAIL"
