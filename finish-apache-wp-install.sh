@@ -15,7 +15,8 @@ function finish_apache_wp_install
 	WP_EMAIL="$5"
 
 
-	VPATH=$(apache_virtualhost_get_docroot $WP_DOMAIN)
+	VPATH=$(apache_virtualhost_get_docroot $WP_DOMAIN | sed 's/\/$//g')
+	
 
 	mv "$VPATH/wordpress/*" "$VPATH/"
 	cd "$VPATH/wp-admin/"

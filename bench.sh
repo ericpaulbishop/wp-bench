@@ -23,6 +23,7 @@ if [ "$MODE" = "linode" ] ; then
 		vhost="127.0.0.1"
 	fi
 
+	DB_PASSWORD="$DB_ROOT_PASSWORD"
 	system_update
 	postfix_install_loopback_only
 	mysql_install "$DB_ROOT_PASSWORD" && mysql_tune 40
