@@ -2,7 +2,7 @@
 #
 # StackScript Bash Library
 #
-# Copyright (c) 2010 Linode LLC / Christopher S. Aker &lt;caker@linode.com&gt;
+# Copyright (c) 2010 Linode LLC / Christopher S. Aker <caker@linode.com>
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, 
@@ -49,7 +49,7 @@ function get_rdns {
 	# calls host on an IP address and returns its reverse dns
 
 	if [ ! -e /usr/bin/host ]; then
-		aptitude -y install dnsutils &gt; /dev/null
+		aptitude -y install dnsutils > /dev/null
 	fi
 	echo $(host $1 | awk '/pointer/ {print $5}' | sed 's/\.$//')
 }
@@ -91,8 +91,8 @@ function apache_install {
 	# clean up, or add the NameVirtualHost line to ports.conf
 	sed -i -e 's/^NameVirtualHost \*$/NameVirtualHost *:80/' /etc/apache2/ports.conf
 	if ! grep -q NameVirtualHost /etc/apache2/ports.conf; then
-		echo 'NameVirtualHost *:80' &gt; /etc/apache2/ports.conf.tmp
-		cat /etc/apache2/ports.conf &gt;&gt; /etc/apache2/ports.conf.tmp
+		echo 'NameVirtualHost *:80' > /etc/apache2/ports.conf.tmp
+		cat /etc/apache2/ports.conf >> /etc/apache2/ports.conf.tmp
 		mv -f /etc/apache2/ports.conf.tmp /etc/apache2/ports.conf
 	fi
 }
@@ -134,12 +134,12 @@ function apache_virtualhost {
 
 	mkdir -p /srv/www/$1/public_html /srv/www/$1/logs
 
-	echo "&lt;VirtualHost *:80&gt;" &gt; /etc/apache2/sites-available/$1
-	echo "    ServerName $1" &gt;&gt; /etc/apache2/sites-available/$1
-	echo "    DocumentRoot /srv/www/$1/public_html/" &gt;&gt; /etc/apache2/sites-available/$1
-	echo "    ErrorLog /srv/www/$1/logs/error.log" &gt;&gt; /etc/apache2/sites-available/$1
-    echo "    CustomLog /srv/www/$1/logs/access.log combined" &gt;&gt; /etc/apache2/sites-available/$1
-	echo "&lt;/VirtualHost&gt;" &gt;&gt; /etc/apache2/sites-available/$1
+	echo "<VirtualHost *:80>" > /etc/apache2/sites-available/$1
+	echo "    ServerName $1" >> /etc/apache2/sites-available/$1
+	echo "    DocumentRoot /srv/www/$1/public_html/" >> /etc/apache2/sites-available/$1
+	echo "    ErrorLog /srv/www/$1/logs/error.log" >> /etc/apache2/sites-available/$1
+    echo "    CustomLog /srv/www/$1/logs/access.log combined" >> /etc/apache2/sites-available/$1
+	echo "</VirtualHost>" >> /etc/apache2/sites-available/$1
 
 	a2ensite $1
 
@@ -359,7 +359,7 @@ function goodstuff {
 
 	aptitude -y install wget vim less
 	sed -i -e 's/^#PS1=/PS1=/' /root/.bashrc # enable the colorful root bash prompt
-	sed -i -e "s/^#alias ll='ls -l'/alias ll='ls -al'/" /root/.bashrc # enable ll list long alias &lt;3
+	sed -i -e "s/^#alias ll='ls -l'/alias ll='ls -al'/" /root/.bashrc # enable ll list long alias <3
 }
 
 
@@ -382,5 +382,5 @@ function randomString {
 		else LEN="$1"
 	fi
 
-	echo $(&lt;/dev/urandom tr -dc A-Za-z0-9 | head -c $LEN) # generate a random string
+	echo $(</dev/urandom tr -dc A-Za-z0-9 | head -c $LEN) # generate a random string
 }
